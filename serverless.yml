@@ -1,0 +1,31 @@
+service: campaigns
+useDotenv: true
+custom:
+  webpack:
+    webpackConfig: 'webpack.config.js' # Name of webpack configuration file
+    includeModules: true # Node modules configuration for packaging
+    packager: 'npm' # Packager that will be used to package your external modules
+  serverless-offline:
+    noPrependStageInUrl: true
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  environment:
+    DB_SECRET: ${env:DB_SECRET}
+    DB_USERNAME: ${env:DB_USERNAME}
+    DB_HOST: ${env:DB_HOST}
+    DB_PORT: ${env:DB_PORT}
+
+functions:
+  test:
+    handler: src/test.handler
+    name: test
+    events:
+      - http:
+          path: test
+          method: get
+plugins:
+  - serverless-webpack
+  - serverless-offline
