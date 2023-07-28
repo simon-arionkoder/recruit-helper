@@ -13,6 +13,7 @@ provider:
     DB_USERNAME: ${env:DB_USERNAME}
     DB_HOST: ${env:DB_HOST}
     DB_PORT: ${env:DB_PORT}
+    GPT_KEY: ${env:GPT_KEY}
 
 functions:
   get-candidate:
