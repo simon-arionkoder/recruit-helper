@@ -1,0 +1,1 @@
+export type candidateStatus = 'EXISTS' | 'NOT_EXISTS'

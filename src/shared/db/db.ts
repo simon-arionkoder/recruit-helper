@@ -1,22 +1,47 @@
-import { Connection, ConnectionConfig, createConnection } from 'mysql2/promise'
+import { DataSource } from "typeorm";
+import "reflect-metadata";
+import { Candidate } from "./models/candidate";
 
-export class DbUtils{
-    connection: Connection;
-    async connect(): Promise<Connection>{
+export class DbUtils {
+    dataSource: DataSource;
+    constructor(){
+
+    }
+    async createConnection(){
         try{
-            const config: Partial<ConnectionConfig> = {
-                host     : process.env.DB_HOST,
-                user     : process.env.DB_USERNAME,
-                password : process.env.DB_SECRET,
-                port     : 3306
-            }
-            this.connection = await createConnection(config);
-            await this.connection.query(`USE recruit-helper;`)
-            return this.connection;
+            const AppDataSource = new DataSource({
+                entities: [Candidate],
+                synchronize: true,
+                logging: false,
+                type: "mysql",
+                host: "localhost",
+                port: 3306,
+                username: "root",
+                password: "root",
+                database: "recruit_helper",
+            })
+            this.dataSource = await AppDataSource.initialize();
         } catch(e){
-            console.log('Error connecting to DB - ', e);
-            throw e;
+            console.log('Error connecting - ', e);
         }
     }
-    
+    async saveCandidate(candidate: Candidate){
+        try{
+            const candidateRepository = this.dataSource.getRepository(Candidate)
+            await candidateRepository.save(candidate)
+            const savedCandidate = await candidateRepository.find({where: {id: candidate.id}})
+            return savedCandidate;
+        } catch(e){
+            console.log('Error saving candidate - ', e)
+        }
+    }
+    async getCandidate(id: Candidate['id']){
+        try{
+            const candidateRepository = this.dataSource.getRepository(Candidate)
+            const candidate = await candidateRepository.findOne({where: {id}});
+            return candidate;
+        } catch(e){
+            console.log('Error retrieving candidate - ', e)
+        }
+    }
 }
