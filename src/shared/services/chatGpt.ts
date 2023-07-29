@@ -1,24 +1,16 @@
-import axios from 'axios';
+import { Configuration, OpenAIApi } from 'openai';
 
-const openai = axios.create({
-  baseURL: "https://api.openai.com/v1",
-  headers: {
-    "Content-Type": "application/json",
-    "Authorization": `Bearer ${process.env.GPT_KEY}`,
-  },
+const configuration = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY,
 });
+const openai = new OpenAIApi(configuration);
+
 export class ChatService{
-    public async createChatCompletion(messages, options) {
-        try {
-          const response = await openai.post("/chat/completions", {
-            model: "gpt-3.5-turbo",
-            messages,
-            ...options,
-          });
-      
-          return response.data.choices;
-        } catch (error) {
-          console.error("Error creating chat completion:", error);
-        }
-      }
+    public async createChatCompletion(message: string) {
+        const completion = await openai.createChatCompletion({
+          model: "gpt-3.5-turbo",
+          messages: [{role: "user", content: message}],
+        });
+        return completion.data.choices[0].message;
+    } 
 }

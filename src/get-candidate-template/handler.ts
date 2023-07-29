@@ -20,6 +20,8 @@ import { parsingUtils } from '../shared/utils/parsingUtils';
 export const handler = async (event: APIGatewayProxyEvent, context, callback) => {
     try{
         const body = JSON.parse(event.body ?? '');
+        // Use the body to query GPT
+        // Save the candidate
         const candidate = parsingUtils.parseCandidateBody(body);
         const dbUtils = new DbUtils();
         await dbUtils.createConnection();
