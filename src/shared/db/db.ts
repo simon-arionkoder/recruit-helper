@@ -44,4 +44,13 @@ export class DbUtils {
             console.log('Error retrieving candidate - ', e)
         }
     }
+    async getAllCandidates(){
+        try{
+            const candidateRepository = this.dataSource.getRepository(Candidate)
+            const candidates = await candidateRepository.find();
+            return candidates;    
+        } catch(e){
+            console.log('Error retrieving all candidates - ', e);
+        }
+    }
 }

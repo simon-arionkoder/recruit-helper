@@ -23,6 +23,10 @@ functions:
       - http:
           path: get-candidate
           method: get
+          request:
+            parameters:
+              queryStrings:
+                id: true
   get-candidate-template:
     handler: src/get-candidate-template/handler.handler
     name: get-candidate-template
