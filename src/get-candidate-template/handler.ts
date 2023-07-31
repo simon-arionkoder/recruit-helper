@@ -8,14 +8,17 @@ export const handler = async (event: APIGatewayProxyEvent, context, callback) =>
     try{
         const body = JSON.parse(event.body ?? '');
         // Use the body to query GPT
+        const chatService = new ChatService();
+        const chatResp = await chatService.createChatCompletion(body, ['React', 'Javascript', 'NodeJS'])
         // Save the candidate
         const candidate = parsingUtils.parseCandidateBody(body);
         const dbUtils = new DbUtils();
         await dbUtils.createConnection();
-        const savedCandidate = await dbUtils.saveCandidate(candidate)
-        return createResponse(200,JSON.stringify(savedCandidate));
+        const savedCandidate = await dbUtils.saveCandidate(candidate);
+        console.log(savedCandidate)
+        return createResponse(200, JSON.stringify(chatResp));
     } catch(e){
         console.log(e)
-        throw e;
+        return e;
     }
 }

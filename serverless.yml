@@ -34,6 +34,7 @@ functions:
       - http:
           path: get-candidate-template
           method: post
+    timeout: 60
 plugins:
   - serverless-webpack
   - serverless-offline

@@ -1,5 +1,4 @@
 import { Entity, Column, PrimaryGeneratedColumn } from "typeorm"
-import {} from 'typeorm/'
 
 @Entity("candidate", {schema: 'recruit_helper'})
 export class Candidate {
