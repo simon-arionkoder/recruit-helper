@@ -26,3 +26,11 @@ export async function createResponse(statusCode: number, body: string): Promise<
 
     });
 }
+
+export function createUniqueId(name: string): string{
+    const lowerCaseStr = name.toLowerCase();
+  
+    const formattedStr = lowerCaseStr.replace(/\s+/g, '-');
+  
+    return formattedStr;
+}
