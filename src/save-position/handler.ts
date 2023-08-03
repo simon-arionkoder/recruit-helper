@@ -1,16 +1,16 @@
 import { APIGatewayProxyHandler, APIGatewayProxyEvent } from 'aws-lambda';
-import { ChatService } from '../shared/services/chatGpt';
 import { DbUtils } from '../shared/db/db';
-import { parsingUtils } from '../shared/utils/parsingUtils';
 import { createResponse } from '../shared/utils/genericUtils';
-
+import { parsingUtils } from '../shared/utils/parsingUtils';
 export const handler = async (event: APIGatewayProxyEvent, context, callback) => {
     try{
         const body = JSON.parse(event.body ?? '');
-        // Use the body to query GPT
-        const chatService = new ChatService();
-        const chatResp = await chatService.createChatCompletion(body, ['React', 'Javascript', 'NodeJS'])
-        return createResponse(200, JSON.stringify(chatResp));
+        const position = parsingUtils.parsePositionBody(body);
+        const dbUtils = new DbUtils();
+        await dbUtils.createConnection();
+        const savedCandidate = await dbUtils.savePosition(position);
+        console.log(savedCandidate)
+        return createResponse(200,JSON.stringify(position))
     } catch(e){
         console.log(e)
         return e;

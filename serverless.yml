@@ -34,7 +34,39 @@ functions:
       - http:
           path: get-candidate-template
           method: post
-    timeout: 60
+    timeout: 180
+  save-candidate:
+    handler: src/save-candidate/handler.handler
+    name: save-candidate
+    events:
+      - http:
+          path: save-candidate
+          method: post
+    timeout: 180 
+  save-position:
+    handler: src/save-position/handler.handler
+    name: save-position
+    events:
+      - http:
+          path: save-position
+          method: post
+    timeout: 180 
+  update-status:
+    handler: src/update-status/handler.handler
+    name: update-status
+    events:
+      - http:
+          path: update-status
+          method: post
+    timeout: 180    
+  get-positions:
+    handler: src/get-positions/handler.handler
+    name: get-positions
+    events:
+      - http:
+          path: get-positions
+          method: get
+    timeout: 180    
 plugins:
   - serverless-webpack
   - serverless-offline

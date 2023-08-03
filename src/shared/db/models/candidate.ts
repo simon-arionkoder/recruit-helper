@@ -6,6 +6,9 @@ export class Candidate {
     id: number
 
     @Column()
+    unique_id: string
+
+    @Column()
     name: string
 
     @Column("text")
