@@ -75,6 +75,16 @@ export class DbUtils {
         }
     }
 
+    async getCandidatePosition(position: Candidate['position']){
+        try{
+            const candidateRepository = this.dataSource.getRepository(Candidate)
+            const candidate = await candidateRepository.findOne({where: {position: position}});
+            return candidate;
+        } catch(e){
+            console.log('Error retrieving candidate - ', e)
+        }
+    }
+
     async getPositions(){
         try{
             const positionsRepository = this.dataSource.getRepository(Positions)
