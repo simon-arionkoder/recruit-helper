@@ -7,7 +7,7 @@ export const handler = async (event: APIGatewayProxyEvent, context, callback) =>
     try{
         const body = JSON.parse(event.body ?? '');
         const chatService = new ChatService();
-        const chatResp = await chatService.createChatCompletion(body, ['React', 'Javascript', 'NodeJS'])
+        const chatResp = await chatService.createChatCompletion(body)
         const candidate = parsingUtils.parseCandidateBody(chatResp);
         const dbUtils = new DbUtils();
         await dbUtils.createConnection();

@@ -1,5 +1,5 @@
 import { Configuration, OpenAIApi } from 'openai';
-import { endQuery, startQuery, StartPrompt } from './templateConstants';
+import { StartPrompt } from './templateConstants';
 
 const configuration = new Configuration({
   apiKey: process.env.GPT_KEY,
@@ -7,7 +7,7 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 export class ChatService{
-    public async createChatCompletion(candidate, skills: string[]){
+    public async createChatCompletion(candidate){
       try{
         const recruiterName = candidate.recruiterName;
         const recruiterEmail = candidate.recruiterEmail;
