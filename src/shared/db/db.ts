@@ -22,7 +22,6 @@ export class DbUtils {
                 password: process.env.DB_SECRET,
                 database: "recruit_helper",
             })
-            console.log(AppDataSource);
             this.dataSource = await AppDataSource.initialize();
         } catch(e){
             console.log('Error connecting - ', e);
@@ -67,8 +66,9 @@ export class DbUtils {
 
     async getCandidate(unique_id: Candidate['unique_id']){
         try{
+            const unique = createUniqueId(unique_id);
             const candidateRepository = this.dataSource.getRepository(Candidate)
-            const candidate = await candidateRepository.findOne({where: {unique_id}});
+            const candidate = await candidateRepository.findOne({where: {unique_id: unique}});
             return candidate;
         } catch(e){
             console.log('Error retrieving candidate - ', e)

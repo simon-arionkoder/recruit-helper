@@ -3,7 +3,7 @@ import { DbUtils } from '../shared/db/db';
 import { createResponse } from '../shared/utils/genericUtils';
 export const handler = async (event: APIGatewayProxyEvent, context, callback) => {
     try{
-        const id = parseInt(event.queryStringParameters?.id as any);
+        const id = event.queryStringParameters?.id;
         const dbUtils = new DbUtils();
         await dbUtils.createConnection();
         if(!id){

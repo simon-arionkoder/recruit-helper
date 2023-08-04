@@ -4,10 +4,15 @@ import { createUniqueId } from "./genericUtils";
 export namespace parsingUtils {
     export function parseCandidateBody(body): Candidate {
         const newCandidate = new Candidate();
-        newCandidate.about = body.json.about;
-        newCandidate.name = body.json.name;
+        const parsedBody = JSON.parse(body.content);
+        newCandidate.company = parsedBody.company;
+        newCandidate.name = parsedBody.name;
+        newCandidate.country = parsedBody.country;
+        newCandidate.company = parsedBody.current_company;
+        newCandidate.position = parsedBody.position;
+        newCandidate.years_experience = parsedBody.years_of_experience;
         newCandidate.status = 'pending';
-        newCandidate.unique_id = createUniqueId(body.json.name);
+        newCandidate.unique_id = createUniqueId(parsedBody.name);
         return newCandidate;
     }
 
