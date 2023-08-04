@@ -8,11 +8,20 @@ export class Candidate {
     @Column()
     unique_id: string
 
-    @Column()
+    @Column("text")
     name: string
 
     @Column("text")
-    about: string
+    position: string
+
+    @Column("text")
+    years_experience: string
+
+    @Column("text")
+    country: string
+
+    @Column("text")
+    company: string
 
     @Column()
     status: string
