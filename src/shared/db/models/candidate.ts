@@ -23,6 +23,15 @@ export class Candidate {
     @Column("text")
     company: string
 
+    @Column("text")
+    message: string
+
+    @Column("text")
+    url: string
+
+    @Column()
+    last_update: Date
+
     @Column()
     status: string
 }
