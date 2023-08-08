@@ -24,7 +24,8 @@ export namespace parsingUtils {
     export function parseUpdateCandidateBody(body): Candidate {
         const updateCandidate = new Candidate();
         updateCandidate.name = body.name;
-        updateCandidate.status = body.status;
+        updateCandidate.status = body.status || '';
+        updateCandidate.message = body.message || '';
         updateCandidate.unique_id = createUniqueId(body.name);
         return updateCandidate;
     }
