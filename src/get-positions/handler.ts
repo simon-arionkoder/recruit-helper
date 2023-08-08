@@ -1,7 +1,7 @@
 import { APIGatewayProxyHandler, APIGatewayProxyEvent } from 'aws-lambda';
 import { DbUtils } from '../shared/db/db';
 import { createResponse } from '../shared/utils/genericUtils';
-export const handler = async (event: APIGatewayProxyEvent, context, callback) => {
+export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent, context, callback) => {
     try{
         const id = parseInt(event.queryStringParameters?.id as any);
         const dbUtils = new DbUtils();
