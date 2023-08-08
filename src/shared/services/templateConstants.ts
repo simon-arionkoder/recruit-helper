@@ -7,3 +7,4 @@ The expected outcome is an object with the following format:
 { name, position, years_of_experience, country, current_company, message} parse to json and in the position variable return the position that i sent in this message
 position: __position__
                  and profile:`
+export const SavePrompt = `The expected outcome is an object with the following format: { name, position, years_of_experience, country, current_company, position} parse the following json to create the object. to position value use the following value __position__`                
