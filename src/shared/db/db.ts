@@ -3,6 +3,7 @@ import "reflect-metadata";
 import { Candidate } from "./models/candidate";
 import { Positions } from "./models/positions";
 import { createUniqueId } from "../utils/genericUtils";
+var moment = require('moment');
 
 export class DbUtils {
     dataSource: DataSource;
@@ -40,12 +41,24 @@ export class DbUtils {
 
     async updateCandidateStatus(candidate: Candidate){
         try{
-            const candidateRepository = this.dataSource.getRepository(Candidate)
-            await candidateRepository.createQueryBuilder()
-            .update(Candidate)
-            .set({ status: candidate.status})
-            .where("unique_id = :id", { id: candidate.unique_id })
-            .execute();
+            const candidateRepository = this.dataSource.getRepository(Candidate);
+            const today = moment().format("YYYY-MM-DD hh:mm:ss");
+            if (candidate.status != ''){
+                await candidateRepository.createQueryBuilder()
+                .update(Candidate)
+                .set({ status: candidate.status, last_update: today})
+                .where("unique_id = :id", { id: candidate.unique_id })
+                .execute();
+            }
+
+            if (candidate.message != ''){
+                await candidateRepository.createQueryBuilder()
+                .update(Candidate)
+                .set({ message: candidate.message, last_update: today})
+                .where("unique_id = :id", { id: candidate.unique_id })
+                .execute();
+            }
+            
             const savedCandidate = await candidateRepository.find({where: {unique_id: candidate.unique_id}})
             return savedCandidate;
         } catch(e){
